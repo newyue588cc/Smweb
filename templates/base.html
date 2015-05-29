@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}operation system manager{% end %}</title>
+<!-- jQuery<E6><96><87><E4><BB><B6><E3><80><82><E5><8A><A1><E5><BF><85><E5><9C><A8>bootstrap.min.js <E4><B9><8B><E5><89><8D><E5><BC><95><E5><85><A5> -->
+<script src="{{ static_url("js/jquery-2.1.3.min.js")}}"></script>
+<!-- bootstrap <E5><BC><95><E5><85><A5> -->
+<link href="{{ static_url("css/bootstrap.min.css")}}" rel="stylesheet" type="text/css">
+<script src="{{ static_url("js/bootstrap.min.js")}}"></script>
+<script src="{{ static_url("js/ie10-viewport-bug-workaround.js")}}"></script>
+</head>
+
+<body style="padding-top: 65px;">
+
+<div class="container">
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Operation System</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navba1">
+      <ul class="nav navbar-nav">
+        <li {% block index %} class="active" {%end%}><a href="/">首页<span class="sr-only">(current)</span></a></li>
+        <li {% block deploy %} {%end%}><a href="/deploy/buzz-ads">上线<span class="sr-only">(current)</span></a></li>
+        <li {% block show %} {%end%}><a href="/show">资产管理<span class="sr-only">(current)</span></a></li>
+        <li {% block monitor %} {%end%} ><a href="/monitor">监控<span class="sr-only">(current)</span></a></li>
+        <li {% block runcmd %} {%end%}><a href="/runcmd">saltcmd<span class="sr-only">(current)</span></a></li>
+      </ul>
+	<ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ email }}<span class="caret"></span></a>
+           <ul class="dropdown-menu" role="menu">
+             <li><a href="/usershow">个人信息</a></li>
+             <li><a href="/setting">设置</a></li>
+             <li class="divider"></li>
+             <li><a href="/logout">退出</a></li>
+           </ul>
+         </li>
+
+
+	</ul>    
+	</div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+</div>
+
+
+
+{% block content %}{% end %}
+
+<div id="footer" class="container">
+<address class="text-center">
+  <hr />
+  <strong>© copyright 2015 Mark</strong>
+  <abbr title="Email">| Powered by</abbr><a href="mailto:#">mark.li@i-click.com</a>
+</address>
+</div>
+
+<script type="text/javascript">
+	// Window load event used just in case window height is dependant upon images
+	$(window).bind("load", function() {
+		var footerHeight = 0,
+		footerTop = 0,
+		$footer = $("footer");
+		positionFooter();
+	    //定义positionFooter function
+		function positionFooter() {
+		//取到div#footer高度
+			footerHeight = $footer.height();
+			//div#footer离屏幕顶部的距离
+			footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";
+			/* DEBUGGING STUFF
+			console.log("Document height: ", $(document.body).height());
+			console.log("Window height: ", $(window).height());
+			console.log("Window scroll: ", $(window).scrollTop());
+			console.log("Footer height: ", footerHeight);
+			console.log("Footer top: ", footerTop);
+			console.log("-----------")
+			*/
+			//如果页面内容高度小于屏幕高度，div#footer将绝对定位到屏幕底部，否则div#footer保留它的正常静态定位
+			if ( ($(document.body).height()+footerHeight) < $(window).height()) {
+				$footer.css({
+					position: "absolute"
+				}).stop().animate({
+					top: footerTop
+				});
+			} else {
+				$footer.css({
+					position: "static"
+				});
+			}
+		}
+		$(window).scroll(positionFooter).resize(positionFooter);
+	});
+</script>
+
+</body>
+</html>

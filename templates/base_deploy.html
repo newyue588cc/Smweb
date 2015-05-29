@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %} 上线系统 {% end %}
+{% block index %} {%end%}
+{% block deploy %} class="active" {%end%}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+
+      <div class="col-md-2"> <!-- Main Container -->
+        <div class="list-group">
+          <h3><strong>项目列表</strong></h3>
+          <a href="/deploy/buzz-ads" class="list-group-item {%block buzz-ads%}active{%end%}">buzz-ads</a>
+          <a href="/deploy/buzz-static" class="list-group-item {%block buzz-static%}{%end%}">buzz-static</a>
+          <a href="/deploy/ads-bid" class="list-group-item {%block ads-bid%}{%end%}">ads-bid</a>
+          <a href="/deploy/ads-api" class="list-group-item {%block ads-api%}{%end%}">ads-api</a>
+          <a href="/deploy/ads-log" class="list-group-item {%block ads-log%}{%end%}">ads-log</a>
+          <a href="/deploy/ads-data" class="list-group-item {%block ads-data%}{%end%}">ads-data</a>
+          <a href="/deploy/ads-billing" class="list-group-item {%block ads-billing%}{%end%}">ads-billing</a>
+          <a href="/deploy/ads-admax" class="list-group-item {%block ads-admax%}{%end%}">ads-admax</a>
+          <a href="/deploy/ads-admaxapi" class="list-group-item {%block ads-admaxapi%}{%end%}">ads-admaxapi</a>
+          <a href="/deploy/bs-website" class="list-group-item {%block bs-website%}{%end%}">bs-website</a>
+          <a href="/deploy/bs-static" class="list-group-item {%block bs-static%}{%end%}">bs-static</a>
+          <a href="/deploy/bs-passport" class="list-group-item {%block bs-passport%}{%end%}">bs-passport</a>
+          <a href="/deploy/bs-button" class="list-group-item {%block bs-button%}{%end%}">bs-button</a>
+          <a href="/deploy/bs-analy" class="list-group-item {%block bs-analy%}{%end%}">bs-analy</a>
+          <a href="/deploy/genome" class="list-group-item {%block genome%}{%end%}">genome</a>
+          <a href="/deploy/rtt" class="list-group-item {%block rtt%}{%end%}">rtt</a>
+          <a href="/deploy/bx" class="list-group-item {%block bx%}{%end%}">bx</a>
+          <a href="/deploy/cdh-push" class="list-group-item {%block cdn-push%}{%end%}">cdh-push</a>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <h4 style="padding-top: 45px;">当前位置:上线系统 >> <span id="project">{% block location %}buzz-ads{%end%}</span>上线</h4>
+        <hr/>
+
+      <div class="row">
+	{% block row10 %}
+        <div class="col-md-4">
+          <h4>服务器列表如下：<h4> 
+          <div class="checkbox" id="checkbox" style="padding-top: 5px;">
+		 {% for item in items %} 
+            <label style="padding-top: 5px;">
+              <input type="checkbox" name="host" value="{{item["ipaddress"]}}">{{item["hostname"]}}
+            </label>
+			<br/>
+		 {% end %}
+          </div>
+		<div style="padding-top: 45px;">
+			<button class="btn btn-default btn-primary" type="button" name="backup" id="backup" value="backup">备份</button>
+ 			<button class="btn btn-default btn-success" type="button" name="btest" id="test" value="test">测试</button>
+ 			<button class="btn btn-default btn-success" type="button" name="bsync" id="bsync" value="sync">同步</button>
+ 			<button class="btn btn-default btn-danger" type="button" name="brestart" id="brestart" value="restart">重启</button>
+		</div>
+    </div>
+      <div class="col-md-8">
+        <h3>output result:</h3>
+        <textarea id="logresult" rows="25" class="form-control" style=" background-color:black;color:white;">
+        </textarea>
+
+      </div>
+	{%end%}
+    </div>
+
+      </div>
+
+  </div>
+
+
+
+</div> <!--all container end -->
+<script type="text/javascript">
+	
+	$("#test").click(function() {
+		var ipaddress = [];
+		$("input[name='host']:checked").each(function() {
+			ipaddress.push(this.value);
+	});
+		var test = $("#test").val();
+		var item = $("#project").text();
+		$.post("/deploy",{'ipaddr[]':ipaddress,'cmd':test,'item':item},function(data,status) {
+			if(status == "success")
+			{
+				$("#logresult").html(data);
+			}else {
+				alert("ajax faild!");
+			}
+	});
+});
+
+	$("#bsync").click(function() {
+		var ipaddress = [];
+		$("input[name='host']:checked").each(function() {
+			ipaddress.push(this.value);
+	});
+		var test = $("#bsync").val();
+		var item = $("#project").text();
+		$.post("/deploy",{'ipaddr[]':ipaddress,'cmd':test,'item':item},function(data,status) {
+			if(status == "success")
+			{
+				$("#logresult").html(data);
+			}else {
+				alert("ajax faild!");
+			}
+	});
+});
+	
+
+	$("#backup").click(function() {
+		var ipaddress = [];
+		$("input[name='host']:checked").each(function() {
+			ipaddress.push(this.value);
+	});
+		var test = $("#backup").val();
+		var item = $("#project").text();
+		$.post("/deploy",{'ipaddr[]':ipaddress,'cmd':test,'item':item},function(data,status) {
+			if(status == "success")
+			{
+				$("#logresult").html(data);
+			}else {
+				alert("ajax faild!");
+			}
+	});
+});
+
+
+	$("#brestart").click(function() {
+		var ipaddress = [];
+		$("input[name='host']:checked").each(function() {
+			ipaddress.push(this.value);
+	});
+		var test = $("#brestart").val();
+		var item = $("#project").text();
+		$.post("/deploy",{'ipaddr[]':ipaddress,'cmd':test,'item':item},function(data,status) {
+			if(status == "success")
+			{
+				$("#logresult").html(data);
+			}else {
+				alert("ajax faild!");
+			}
+	});
+});
+
+</script>
+
+{% end %}

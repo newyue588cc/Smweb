@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}资产管理 {%end%}
+{% block index %} {%end%}
+{% block srvshow %} class="active" {%end%}
+
+
+{% block content %}
+<div class="container">
+<nav class="navbar navbar-default">
+<ul class="nav nav-pills">
+  <li role="presentation"><a href="show/srvshow">服务器</a></li>
+  <li role="presentation"><a href="show/netshow">网络设备</a></li>
+  <li role="presentation"><a href="show/rackshow">机柜</a></li>
+  <li role="presentation"><a href="show/daomain">域名</a></li>
+  <li role="presentation"><a href="show/other">其它</a></li>
+</ul>
+</nav>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover table-condensed">
+			<tr class="success">
+				<td><input type="checkbox" value=""/></td>
+				<td>IP</td>
+				<td>hostname</td>
+				<td>system</td>
+				<td>cpu</td>
+				<td>cpu_num</td>
+				<td>memory</td>
+				<td>Idrac_ip</td>
+				<td>project</td>
+				<td>rack</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" value=""/></td>
+				<td name='ip'>{{ ip }}</td>
+				<td name='hostname'>{{ hostname }}</td>
+				<td name='system'>{{ system }}</td>
+				<td name='cpu'>{{ cpu }}</td>
+				<td name='cpu_num'>{{ cpu_num }}</td>
+				<td name='memory'>{{ memory }}</td>
+				<td name='idrac_ip'>{{ idrac_ip }}</td>
+				<td name='project'>{{ project }}</td>
+				<td name='rack'>{{ rack }}</td>
+			</tr>
+		</table>
+	</div>
+<button class="btn btn-success" type="submit" name="add">添加</button>
+<button class="btn btn-danger" type="submit" name="del">删除</button>
+</div>
+{% end %}
